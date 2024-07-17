@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"gensample/internal/field"
 	"math/rand/v2"
 	"time"
 
@@ -20,7 +21,8 @@ var (
 )
 
 type config struct {
-	Emitter *ucfg.Config `config:"emitter" validate:"required"`
+	Emitter *ucfg.Config   `config:"emitter" validate:"required"`
+	Fields  []*ucfg.Config `config:"fields" validate:"required"`
 }
 
 func main() {
@@ -40,7 +42,16 @@ func main() {
 		panic(err)
 	}
 
-	em, err := emitter.New(c.Emitter)
+	var fields []*field.Field
+	for _, v := range c.Fields {
+		f, err := field.New(v)
+		if err != nil {
+			panic(err)
+		}
+		fields = append(fields, f)
+	}
+
+	em, err := emitter.New(c.Emitter, fields)
 	if err != nil {
 		panic(err)
 	}

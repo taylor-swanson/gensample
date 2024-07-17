@@ -1,4 +1,4 @@
-module gensample
+module github.com/taylor-swanson/gensample
 
 go 1.22
 

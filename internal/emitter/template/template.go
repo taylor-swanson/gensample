@@ -2,12 +2,13 @@ package template
 
 import (
 	"bytes"
-	"gensample/internal/context"
+	"fmt"
 	"log"
 	"text/template"
 
 	"github.com/elastic/go-ucfg"
 
+	"gensample/internal/context"
 	"gensample/internal/emitter"
 	"gensample/internal/field"
 )
@@ -17,12 +18,11 @@ const (
 )
 
 type config struct {
-	Template string         `config:"template" validate:"required"`
-	Fields   []*ucfg.Config `config:"fields" validate:"required"`
+	Templates []string `config:"templates" validate:"required"`
 }
 
 type tmpl struct {
-	tmpl   *template.Template
+	tmpls  []*template.Template
 	fields []*field.Field
 }
 
@@ -34,7 +34,7 @@ func (t *tmpl) Emit(ctx *context.Context) string {
 
 	buf := bytes.NewBuffer(nil)
 
-	err := t.tmpl.Execute(buf, values)
+	err := t.tmpls[ctx.Current%len(t.tmpls)].Execute(buf, values)
 	if err != nil {
 		log.Printf("emitter.template: error: %v", err)
 		return ""
@@ -43,26 +43,21 @@ func (t *tmpl) Emit(ctx *context.Context) string {
 	return buf.String()
 }
 
-func New(cfg *ucfg.Config) (emitter.Emitter, error) {
+func New(cfg *ucfg.Config, fields []*field.Field) (emitter.Emitter, error) {
 	c := config{}
 	if err := cfg.Unpack(&c); err != nil {
 		return nil, err
 	}
 
-	var err error
 	t := tmpl{}
-	t.tmpl, err = template.New("").Parse(c.Template)
-	if err != nil {
-		return nil, err
-	}
-
-	for _, v := range c.Fields {
-		f, err := field.New(v)
+	for i, v := range c.Templates {
+		tmplv, err := template.New("").Parse(v)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("emitter.template: parse template %d error: %w", i, err)
 		}
-		t.fields = append(t.fields, f)
+		t.tmpls = append(t.tmpls, tmplv)
 	}
+	t.fields = fields
 
 	return &t, nil
 }

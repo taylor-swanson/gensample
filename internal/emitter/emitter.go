@@ -6,6 +6,7 @@ import (
 	"github.com/elastic/go-ucfg"
 
 	"gensample/internal/context"
+	"gensample/internal/field"
 )
 
 type Emitter interface {
@@ -13,7 +14,7 @@ type Emitter interface {
 }
 
 // NewFunc is a function that creates a new Emitter with the given config.
-type NewFunc = func(*ucfg.Config) (Emitter, error)
+type NewFunc = func(cfg *ucfg.Config, fields []*field.Field) (Emitter, error)
 
 type config struct {
 	Type string `config:"type" validate:"required"`
@@ -22,7 +23,7 @@ type config struct {
 var registry = map[string]NewFunc{}
 
 // New creates a new Emitter from the given config.
-func New(cfg *ucfg.Config) (Emitter, error) {
+func New(cfg *ucfg.Config, fields []*field.Field) (Emitter, error) {
 	c := config{}
 	if err := cfg.Unpack(&c); err != nil {
 		return nil, err
@@ -33,7 +34,7 @@ func New(cfg *ucfg.Config) (Emitter, error) {
 		return nil, fmt.Errorf("emitter: unknown emitter: %q", c.Type)
 	}
 
-	return newFn(cfg)
+	return newFn(cfg, fields)
 }
 
 // Register will register an emitter with a given name.

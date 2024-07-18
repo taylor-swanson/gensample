@@ -8,9 +8,9 @@ import (
 
 	"github.com/elastic/go-ucfg"
 
-	"gensample/internal/context"
-	"gensample/internal/emitter"
-	"gensample/internal/field"
+	"github.com/taylor-swanson/gensample/internal/context"
+	"github.com/taylor-swanson/gensample/internal/emitter"
+	"github.com/taylor-swanson/gensample/internal/field"
 )
 
 const (

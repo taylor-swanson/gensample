@@ -2,10 +2,14 @@
 
 Sample data generator.
 
+## Building
+
+TODO
+
 ## Usage
 
 TODO
 
-## Building
+## Documentation
 
-TODO
+- See [docs](docs/README.md) for documentation.

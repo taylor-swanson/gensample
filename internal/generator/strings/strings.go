@@ -2,10 +2,11 @@ package strings
 
 import (
 	"errors"
+
 	"github.com/elastic/go-ucfg"
 
-	"gensample/internal/context"
-	"gensample/internal/generator"
+	"github.com/taylor-swanson/gensample/internal/context"
+	"github.com/taylor-swanson/gensample/internal/generator"
 )
 
 const (

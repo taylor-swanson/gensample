@@ -1,8 +1,17 @@
 ---
+#output:
+#  type: stdout
+interval: 1s
+records: 1
+output:
+  type: udp
+  host: localhost
+  port: 9001
+  network: udp4
 emitter:
   type: template
   templates:
-    - '<140>{{.datetime}} myAsaHostname CiscoASA[999]: %ASA-6-305011: Built dynamic TCP translation from inside:{{.src_ip}/{{.src_port}} to outside:{{.dst_ip}}/{{.dst_port}}'
+    - '<140>{{.datetime}} myAsaHostname CiscoASA[999]: %ASA-6-305011: Built dynamic TCP translation from inside:{{.src_ip}}/{{.src_port}} to outside:{{.dst_ip}}/{{.dst_port}}'
     - '<140>{{.datetime}} myAsaHostname CiscoASA[999]: %ASA-6-302016: Teardown UDP connection {{.connection_id}} for outside:{{.dst_ip}}/{{.dst_port}} to inside:{{.src_ip}}/{{.src_port}} duration 0:00:00 bytes {{.byte_count}}'
 fields:
   - name: datetime

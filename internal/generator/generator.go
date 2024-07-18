@@ -5,7 +5,7 @@ import (
 
 	"github.com/elastic/go-ucfg"
 
-	"gensample/internal/context"
+	"github.com/taylor-swanson/gensample/internal/context"
 )
 
 type Generator interface {

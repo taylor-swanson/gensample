@@ -1,8 +1,9 @@
 package field
 
 import (
-	"gensample/internal/generator"
 	"github.com/elastic/go-ucfg"
+
+	"github.com/taylor-swanson/gensample/internal/generator"
 )
 
 type Field struct {

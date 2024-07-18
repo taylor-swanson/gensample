@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/elastic/go-ucfg"
 
-	"gensample/internal/context"
-	"gensample/internal/generator"
+	"github.com/taylor-swanson/gensample/internal/context"
+	"github.com/taylor-swanson/gensample/internal/generator"
 )
 
 // Data sets are from https://github.com/fivethirtyeight/data

@@ -1,9 +1,13 @@
 # Emitters
 
+Emitters are used to format the actual shape and data of a log.
+
 ## Template (template)
 
-The Template emitter using Go templates to produce sample data. The context for
-the template is a map, where each key is the name of a `field`.
+The Template emitter uses Go templates to produce sample data. The context for
+the template is a map, where each key is the name of a `field`. Multiple templates
+may be given, they will be advanced using a round-robin method during the
+running of the tool.
 
 ### Configuration
 

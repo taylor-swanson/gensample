@@ -8,10 +8,12 @@ Docs for `gensample`.
 
 ## Configuration
 
+The configuration is used to drive the tool and generate sample data.
+
 - `emitter` The [emitter](emitters.md) configuration.
 - `output` The [output](outputs.md) configuration.
 - `fields` The fields to be used for data generation. Each field contains a [generator](generators.md) configuration.
-- `interval`: How often to send records. Omit for one-shot.
+- `interval`: How often to send records. Omit or set to zero for one-shot.
 - `records`: The number of records to send each interval.
 
 ```yaml

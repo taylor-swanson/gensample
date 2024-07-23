@@ -4,11 +4,20 @@ Sample data generator.
 
 ## Building
 
-TODO
+The provided magefile can be used to build the project.
+
+```shell
+mage build
+```
 
 ## Usage
 
-TODO
+1. Create a config for generating sample data. See `examples/` for example configurations.
+2. Run the tool
+
+```shell
+build/gensample -c examples/demo.yml
+```
 
 ## Documentation
 

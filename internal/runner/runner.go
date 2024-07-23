@@ -60,16 +60,15 @@ func (r *Runner) Run() error {
 				_ = r.output.Close()
 				return fmt.Errorf("runner: unable to emit to output: %w", err)
 			}
+		}
+		slog.Info("Interval completed", "interval", iteration, "records", r.config.Records)
 
-			slog.Info("Interval completed", "interval", iteration, "records", r.config.Records)
-
-			if r.config.Interval == 0 {
-				return r.output.Close()
-			}
-			if err = r.output.NewInterval(); err != nil {
-				_ = r.output.Close()
-				return fmt.Errorf("runner: unable to create new interval: %w", err)
-			}
+		if r.config.Interval == 0 {
+			return r.output.Close()
+		}
+		if err = r.output.NewInterval(); err != nil {
+			_ = r.output.Close()
+			return fmt.Errorf("runner: unable to create new interval: %w", err)
 		}
 		if ticker != nil {
 			<-ticker.C
@@ -84,8 +83,10 @@ func New(cfg *ucfg.Config, seed uint64) (Runner, error) {
 
 	if seed == 0 {
 		seed = uint64(time.Now().UnixNano())
-		slog.Info("Created random seed", "seed", seed)
 	}
+
+	slog.Info("Starting runner", "seed", seed)
+
 	r := Runner{
 		seed: seed,
 	}

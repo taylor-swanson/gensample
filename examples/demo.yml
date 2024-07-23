@@ -1,6 +1,6 @@
 ---
-records: 1
-interval: 3s
+records: 4
+interval: 0
 output:
   type: stdout
 emitter:

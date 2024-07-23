@@ -48,9 +48,6 @@ func (r *Runner) Run() error {
 	var err error
 	var iteration uint64
 	for {
-		if ticker != nil {
-			<-ticker.C
-		}
 		ctx := context.Context{
 			Total: r.config.Records,
 			Rand:  rand.New(rand.NewPCG(r.seed, r.seed^iteration)),
@@ -73,6 +70,9 @@ func (r *Runner) Run() error {
 				_ = r.output.Close()
 				return fmt.Errorf("runner: unable to create new interval: %w", err)
 			}
+		}
+		if ticker != nil {
+			<-ticker.C
 		}
 
 		iteration++

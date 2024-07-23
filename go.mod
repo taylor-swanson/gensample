@@ -10,5 +10,6 @@ require (
 
 require (
 	github.com/fogleman/ease v0.0.0-20170301025033-8da417bf1776 // indirect
+	github.com/magefile/mage v1.15.0 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )

@@ -10,6 +10,12 @@ The provided magefile can be used to build the project.
 mage build
 ```
 
+### Manual Build
+
+```shell
+go build -o build/gensample github.com/taylor-swanson/gensample/cmd/gensample
+```
+
 ## Usage
 
 1. Create a config for generating sample data. See `examples/` for example configurations.

@@ -46,7 +46,7 @@ The `tcp` output writes sample data to a TCP stream.
 
 - `host`: The remote host.
 - `port`: The remote port.
-- `network`: The network. Accepted values are `tcp`, `tcp4`, and `tcp6`. Defaults to `tcp`.
+- `network`: The network type. Accepted values are `tcp`, `tcp4`, and `tcp6`. Defaults to `tcp`.
 - `octet-framing`: If true, enable octet framing. Defaults to `false`.
 - `delimiter`: When non-transparent framing is used, the character used as a delimiter. Defaults to `\n`.
 
@@ -74,7 +74,7 @@ The `udp` output writes sample data to a UDP socket.
 
 - `host`: The remote host.
 - `port`: The remote port.
-- `network`: The network. Accepted values are `udp`, `udp4`, and `udp6`. Defaults to `udp`.
+- `network`: The network type. Accepted values are `udp`, `udp4`, and `udp6`. Defaults to `udp`.
 
 ```yaml
 output:

@@ -1,12 +1,17 @@
 ---
 records: 4
-interval: 0
+interval: 1ms
+#output:
+#  type: stdout
 output:
-  type: stdout
+  type: tcp
+  host: localhost
+  port: 9001
+#  octet_framing: true
 emitter:
   type: template
   templates:
-    - '<140>{{.datetime}} myAsaHostname CiscoASA[999]: %ASA-6-305011: Built dynamic TCP translation from inside:{{.src_ip}}/{{.src_port}} to outside:{{.dst_ip}}/{{.dst_port}}'
+    - '<140>{{.datetime}} myAsaHostname CiscoASA[999] %ASA-6-305011: Built dynamic TCP translation from inside:{{.src_ip}}/{{.src_port}} to outside:{{.dst_ip}}/{{.dst_port}}'
 fields:
   - name: datetime
     generator:

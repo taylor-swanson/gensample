@@ -1,12 +1,11 @@
 ---
 records: 4
-interval: 1ms
-#output:
-#  type: stdout
 output:
-  type: tcp
-  host: localhost
-  port: 9001
+  type: stdout
+#output:
+#  type: tcp
+#  host: localhost
+#  port: 9001
 #  octet_framing: true
 emitter:
   type: template

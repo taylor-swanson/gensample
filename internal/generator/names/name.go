@@ -2370,6 +2370,7 @@ const (
 	NameFirstName = "first_name"
 	NameLastName  = "last_name"
 	NameEmail     = "email"
+	NameWord      = "word"
 )
 
 type country struct {
@@ -2460,9 +2461,31 @@ func NewEmailGenerator(cfg *ucfg.Config) (generator.Generator, error) {
 	return &g, nil
 }
 
+type word struct {
+	Values []string `config:"values"`
+}
+
+func (g *word) Generate(ctx *context.Context) string {
+	if g.Values != nil {
+		return g.Values[ctx.Rand.IntN(len(g.Values))]
+	}
+
+	return words[ctx.Rand.IntN(len(words))]
+}
+
+func NewWordGenerator(cfg *ucfg.Config) (generator.Generator, error) {
+	g := word{}
+	if err := cfg.Unpack(&g); err != nil {
+		return nil, err
+	}
+
+	return &g, nil
+}
+
 func init() {
 	generator.Register(NameCountry, NewCountryGenerator)
 	generator.Register(NameFirstName, NewFirstNameGenerator)
 	generator.Register(NameLastName, NewLastNameGenerator)
 	generator.Register(NameEmail, NewEmailGenerator)
+	generator.Register(NameWord, NewWordGenerator)
 }

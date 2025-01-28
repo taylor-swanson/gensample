@@ -1,0 +1,41 @@
+---
+output:
+  type: stdout
+records: 2
+emitter:
+  type: template
+  templates:
+    - '{"ts":{{.time}},"uid":"C{{.session_id}}","id.orig_h":"{{.src_ip}}","id.orig_p":{{.src_port}},"id.resp_h":"{{.dst_ip}}","id.resp_p":80,"proto":"tcp","conn_state":"OTH","local_orig":true,"local_resp":false,"missed_bytes":0,"history":"C","orig_pkts":0,"orig_ip_bytes":0,"resp_pkts":0,"resp_ip_bytes":0}'
+    - '{"ts":{{.time}},"uid":"C{{.session_id}}","id.orig_h":"{{.src_ip}}","id.orig_p":{{.src_port}},"id.resp_h":"{{.dst_ip}}","id.resp_p":53,"proto":"udp","service":"dns","duration":0.076967,"orig_bytes":{{.src_bytes}},"resp_bytes":{{.dst_bytes}},"conn_state":"SF","local_orig":true,"local_resp":false,"missed_bytes":0,"history":"Dd","orig_pkts":1,"orig_ip_bytes":203,"resp_pkts":1,"resp_ip_bytes":206,"tunnel_parents":[]}'
+fields:
+  - name: time
+    generator:
+      type: date
+      format: "unix_s_us"
+  - name: session_id
+    generator:
+      type: string
+      length: 12
+  - name: src_ip
+    generator:
+      type: ip
+      cidr: "192.168.0.0/24"
+  - name: src_port
+    generator:
+      type: port
+      min: 1024
+      max: 65535
+  - name: dst_ip
+    generator:
+      type: ip
+      cidr: "175.16.199.0/24"
+  - name: src_bytes
+    generator:
+      type: int
+      min: 10
+      max: 100
+  - name: dst_bytes
+    generator:
+      type: int
+      min: 10
+      max: 100

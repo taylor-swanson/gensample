@@ -24,6 +24,9 @@ type date struct {
 func (g *date) Generate(_ *context.Context) string {
 	now := time.Now()
 
+	if g.Layout == "rfc3339" {
+		return now.Format(time.RFC3339)
+	}
 	if g.Layout == "unix" {
 		return strconv.FormatInt(now.Unix(), 10)
 	}
@@ -35,6 +38,12 @@ func (g *date) Generate(_ *context.Context) string {
 	}
 	if g.Layout == "unix_ns" {
 		return strconv.FormatInt(now.UnixNano(), 10)
+	}
+	if g.Layout == "unix_s_us" {
+		seconds := now.Unix()
+		fractional := now.Nanosecond() / 1000
+
+		return fmt.Sprintf("%d.%d", seconds, fractional)
 	}
 
 	return now.Format(g.Layout)
@@ -65,6 +74,9 @@ func (g *boundedDate) Generate(ctx *context.Context) string {
 	v := int64(g.from + (g.to-g.from)*t)
 	tv := time.Unix(v, 0)
 
+	if g.Layout == "rfc3339" {
+		return tv.Format(time.RFC3339)
+	}
 	if g.Layout == "unix" {
 		return strconv.FormatInt(tv.Unix(), 10)
 	}
@@ -76,6 +88,12 @@ func (g *boundedDate) Generate(ctx *context.Context) string {
 	}
 	if g.Layout == "unix_ns" {
 		return strconv.FormatInt(tv.UnixNano(), 10)
+	}
+	if g.Layout == "unix_s_us" {
+		seconds := tv.Unix()
+		fractional := tv.Nanosecond() / 1000
+
+		return fmt.Sprintf("%d.%d", seconds, fractional)
 	}
 
 	return tv.Format(g.Layout)

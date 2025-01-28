@@ -1,0 +1,46 @@
+---
+output:
+  type: stdout
+records: 2
+emitter:
+  type: template
+  templates:
+    - '<140>{{.date}} fw{{.hostname_id}} : %FTD-4-313005: No matching connection for ICMP error message: icmp src inside:{{.src_ip}}(LOCAL\myUser{{.user_id}}, 9999:my_SgtName) dst outside:{{.dmz_ip}} (type 3, code 3) on outside interface.  Original IP payload: udp src {{.src_ip}}/53 dst {{.dmz_ip}}/{{.src_port}}.'
+    - '<166>{{.date}} fw-bld1-1 : %FTD-6-302013: Built inbound TCP connection {{.session_id}} for Inside1:{{.src_ip}}/{{.src_port}} ({{.src_nat_ip}}/{{.src_nat_port}}) to Outside:{{.dst_ip}}/{{.dst_port}} ({{.dst_ip}}/{{.dst_port}})'
+fields:
+  - name: date
+    generator:
+      type: date
+      format: "Jan 02 2006 15:04:05"
+  - name: src_ip
+    generator:
+      type: ip
+      cidr: "192.168.0.0/24"
+  - name: src_port
+    generator:
+      type: port
+      min: 1024
+      max: 65535
+  - name: src_nat_ip
+    generator:
+      type: ip
+      cidr: "175.16.199.0/24"
+  - name: src_nat_port
+    generator:
+      type: port
+      min: 1024
+      max: 65535
+  - name: dst_ip
+    generator:
+      type: ip
+      cidr: "67.43.156.0/24"
+  - name: dst_port
+    generator:
+      type: port
+      min: 1
+      max: 1023
+  - name: session_id
+    generator:
+      type: int
+      min: 100000000
+      max: 999999999

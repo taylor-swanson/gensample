@@ -58,3 +58,17 @@ func All() error {
 
 	return nil
 }
+
+// Build everything and install
+func Install() error {
+	var err error
+
+	if err = sh.Run("go", "mod", "download"); err != nil {
+		return err
+	}
+	if err = sh.Run("go", "install", "github.com/taylor-swanson/gensample/cmd/gensample"); err != nil {
+		return err
+	}
+
+	return nil
+}

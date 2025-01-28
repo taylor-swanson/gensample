@@ -1,0 +1,78 @@
+---
+output:
+  type: stdout
+records: 2
+emitter:
+  type: template
+  templates:
+    - '{{.date1}} PA-220 1,{{.date2}},012801096514,TRAFFIC,end,2049,{{.date2}},{{.src_ip}},{{.dst_ip}},{{.src_nat}},{{.dst_ip}},new_outbound_from_trust,,,ssl,vsys1,trust,untrust,ethernet1/2,ethernet1/1,send_to_mac,{{.date2}},{{.flow_id}},1,{{.src_port}},443,{{.src_nat_port}},443,0x40001c,tcp,allow,{{.bytes}},{{.src_bytes}},{{.dst_bytes}},{{.packets}},{{.date2}},{{.elapsed_time}},business-and-economy,0,{{.seq_number}},0x0,192.168.0.0-192.168.255.255,United States,0,8,7,tcp-rst-from-client,0,0,0,0,,PA-220,from-policy,,,0,,0,,N/A,0,0,0,0'
+fields:
+  - name: date1
+    generator:
+      type: date
+      format: "Jan _2 2006 15:04:05"
+  - name: date2
+    generator:
+      type: date
+      format: "2006/01/02 15:04:05"
+  - name: src_ip
+    generator:
+      type: ip
+      cidr: "192.168.0.0/24"
+  - name: dst_ip
+    generator:
+      type: ip
+      cidr: "175.16.199.0/24"
+  - name: src_nat
+    generator:
+      type: ip
+      cidr: "192.168.1.0/24"
+  - name: dst_ip
+    generator:
+      type: ip
+      cidr: "175.16.199.0/24"
+  - name: flow_id
+    generator:
+      type: int
+      min: 1000
+      max: 1000000000
+  - name: src_port
+    generator:
+      type: port
+      min: 1024
+      max: 65535
+  - name: src_nat_port
+    generator:
+      type: port
+      min: 1024
+      max: 65535
+  - name: bytes
+    generator:
+      type: int
+      min: 100
+      max: 10000
+  - name: src_bytes
+    generator:
+      type: int
+      min: 100
+      max: 10000
+  - name: dst_bytes
+    generator:
+      type: int
+      min: 100
+      max: 10000
+  - name: packets
+    generator:
+      type: int
+      min: 1
+      max: 10
+  - name: elapsed_time
+    generator:
+      type: int
+      min: 0
+      max: 20
+  - name: seq_number
+    generator:
+      type: int
+      min: 1000000
+      max: 1000000000

@@ -1,0 +1,41 @@
+---
+output:
+  type: stdout
+records: 2
+emitter:
+  type: template
+  templates:
+    - '<134>1 {{.date}} gw-da58d3 CheckPoint 8363 - [action:"Accept"; flags:"444676"; ifdir:"outbound"; ifname:"eth0"; logid:"0"; loguid:"{0x{{.loguid_0}},0x0,0x{{.loguid_1}},0x{{.loguid_2}}}"; origin:"{{.src_ip}}"; originsicname:"cn=cp_mgmt,o=gw-da58d3..tmn8s8"; sequencenum:"1"; version:"5"; __policy_id_tag:"product=VPN-1 & FireWall-1[db_tag={880771B0-FD92-2C4F-82FC-B96FC3DE5A07};mgmt=gw-da58d3;date=1585502566;policy_name=Standard\]"; dst:"{{.dst_ip}}"; inzone:"Local"; layer_name:"Network"; layer_uuid:"63b7fe60-76d2-4287-bca5-21af87337b0a"; match_id:"1"; parent_rule:"0"; rule_action:"Accept"; rule_uid:"1fde807b-6300-4b1a-914f-f1c1f3e2e7d2"; outzone:"External"; product:"VPN-1 & FireWall-1"; proto:"17"; s_port:"{{.src_port}}"; service:"514"; service_id:"syslog"; src:"{{.src_ip}}"]'
+fields:
+  - name: date
+    generator:
+      type: date
+      format: "rfc3339"
+  - name: src_ip
+    generator:
+      type: ip
+      cidr: "192.168.0.0/24"
+  - name: src_port
+    generator:
+      type: port
+      min: 1024
+      max: 65535
+  - name: dst_ip
+    generator:
+      type: ip
+      cidr: "175.16.199.0/24"
+  - name: loguid_0
+    generator:
+      type: string
+      format: hex
+      length: 8
+  - name: loguid_1
+    generator:
+      type: string
+      format: hex
+      length: 8
+  - name: loguid_2
+    generator:
+      type: string
+      format: hex
+      length: 8

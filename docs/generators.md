@@ -8,10 +8,12 @@ is not random.
 ### Configuration
 
 - `format`: The date format string. Accepts [Go time format strings](https://go.dev/src/time/format.go), or one of the predefined values below:
+    - `rfc3339`: RFC 3339 timestamp
     - `unix`: Unix timestamp, in seconds
     - `unix_ms`: Unix timestamp, in milliseconds
     - `unix_us`: Unix timestamp, in microseconds
     - `unix_ns`: Unix timestamp, in nanoseconds
+    - `unix_s_ms`: Unix timestamp in seconds with fractional microseconds
 
 ```yaml
 type: date
@@ -189,7 +191,16 @@ max: 10
 
 ## String (string)
 
-Not yet implemented.
+Generate a string of random letters and numbers of specified length.
+
+### Configuration
+
+- `length`: The length of the string. Must be a positive integer.
+
+```yaml
+type: string
+length: 8
+```
 
 ## String Array (string_array)
 

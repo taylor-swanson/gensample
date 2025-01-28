@@ -43,8 +43,8 @@ func NewFloatGenerator(cfg *ucfg.Config) (generator.Generator, error) {
 }
 
 type IntGenerator struct {
-	Min int `config:"min" validate:"required"`
-	Max int `config:"max" validate:"required"`
+	Min int `config:"min"`
+	Max int `config:"max"`
 }
 
 func (g *IntGenerator) Validate() error {

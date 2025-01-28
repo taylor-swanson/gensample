@@ -13,7 +13,7 @@ const (
 )
 
 type out struct {
-	Filename  string `config:"format"`
+	Filename  string `config:"filename"`
 	Directory string `config:"directory"`
 	Pattern   string `config:"pattern"`
 	Delimiter string `config:"delimiter"`

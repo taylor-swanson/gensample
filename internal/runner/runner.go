@@ -19,6 +19,7 @@ type config struct {
 	Output   *ucfg.Config   `config:"output" validate:"required"`
 	Fields   []*ucfg.Config `config:"fields" validate:"required"`
 	Records  int            `config:"records"`
+	Limit    int            `config:"limit"`
 	Interval time.Duration  `config:"interval"`
 }
 
@@ -47,19 +48,31 @@ func (r *Runner) Run() error {
 
 	var err error
 	var iteration uint64
+	var total int
 	for {
 		ctx := context.Context{
 			Total: r.config.Records,
 			Rand:  rand.New(rand.NewPCG(r.seed, r.seed^iteration)),
 		}
+
+		if r.config.Limit > 0 && total >= r.config.Limit {
+			return r.output.Close()
+		}
+
 		for i := 0; i < r.config.Records; i++ {
 			ctx.Current = i
 			ctx.Progress = float64(ctx.Current) / float64(ctx.Total-1)
 
+			if r.config.Limit > 0 && total >= r.config.Limit {
+				slog.Info("Limit reached", "interval", iteration, "records", i)
+				return r.output.Close()
+			}
 			if _, err = r.output.Write([]byte(r.emitter.Emit(&ctx))); err != nil {
 				_ = r.output.Close()
 				return fmt.Errorf("runner: unable to emit to output: %w", err)
 			}
+
+			total++
 		}
 		slog.Info("Interval completed", "interval", iteration, "records", r.config.Records)
 

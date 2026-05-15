@@ -1,6 +1,11 @@
+// Licensed to Elasticsearch B.V. under one or more agreements.
+// Elasticsearch B.V. licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information.
+
 package udp
 
 import (
+	"errors"
 	"os"
 
 	"github.com/elastic/go-ucfg"
@@ -36,9 +41,10 @@ func (o *out) Close() error {
 }
 
 func (o *out) NewInterval() error {
-	if o.Directory == "" && o.Pattern == "" {
+	if o.Pattern == "" {
 		return nil
 	}
+
 	if err := o.Close(); err != nil {
 		return err
 	}
@@ -47,6 +53,7 @@ func (o *out) NewInterval() error {
 		return err
 	}
 	o.file = newFile
+
 	return nil
 }
 
@@ -58,15 +65,16 @@ func New(cfg *ucfg.Config) (output.Output, error) {
 		return nil, err
 	}
 
-	if o.Directory != "" && o.Pattern != "" {
+	if o.Pattern != "" {
 		if o.file, err = os.CreateTemp(o.Directory, o.Pattern); err != nil {
 			return nil, err
 		}
-	}
-	if o.Filename != "" {
+	} else if o.Filename != "" {
 		if o.file, err = os.Create(o.Filename); err != nil {
 			return nil, err
 		}
+	} else {
+		return nil, errors.New("output.file: no filename or pattern specified")
 	}
 
 	return &o, nil

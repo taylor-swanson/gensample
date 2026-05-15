@@ -5,8 +5,7 @@ interval: 1s
 records: 1
 output:
   type: udp
-  host: localhost
-  port: 9001
+  address: localhost:9001
   network: udp4
 emitter:
   type: template

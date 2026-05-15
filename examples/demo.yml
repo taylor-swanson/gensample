@@ -4,8 +4,7 @@ output:
   type: stdout
 #output:
 #  type: tcp
-#  host: localhost
-#  port: 9001
+#  address: localhost:9001
 #  octet_framing: true
 emitter:
   type: template

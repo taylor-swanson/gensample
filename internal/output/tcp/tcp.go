@@ -1,10 +1,13 @@
+// Licensed to Elasticsearch B.V. under one or more agreements.
+// Elasticsearch B.V. licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information.
+
 package tcp
 
 import (
 	"bufio"
 	"fmt"
 	"net"
-	"strconv"
 
 	"github.com/elastic/go-ucfg"
 
@@ -16,9 +19,8 @@ const (
 )
 
 type out struct {
-	Host         string `config:"host" validate:"required"`
-	Port         int    `config:"port" validate:"required, min=1, max=65535"`
-	Network      string `config:"network" validate:"required"`
+	Address      string `config:"address" validate:"required"`
+	Network      string `config:"network"`
 	OctetFraming bool   `config:"octet_framing"`
 	Delimiter    string `config:"delimiter"`
 
@@ -69,7 +71,7 @@ func New(cfg *ucfg.Config) (output.Output, error) {
 	}
 
 	var err error
-	o.conn, err = net.Dial(o.Network, net.JoinHostPort(o.Host, strconv.Itoa(o.Port)))
+	o.conn, err = net.Dial(o.Network, o.Address)
 	if err != nil {
 		return nil, fmt.Errorf("output.tcp: failed to connect: %w", err)
 	}

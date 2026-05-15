@@ -4,16 +4,14 @@ Sample data generator.
 
 ## Building
 
-The provided magefile can be used to build the project.
-
 ```shell
-mage build
+go build .
 ```
 
-### Manual Build
+### Installation
 
 ```shell
-go build -o build/gensample github.com/taylor-swanson/gensample/cmd/gensample
+go install .
 ```
 
 ## Usage
@@ -22,7 +20,7 @@ go build -o build/gensample github.com/taylor-swanson/gensample/cmd/gensample
 2. Run the tool
 
 ```shell
-build/gensample -c examples/demo.yml
+build/gensample examples/demo.yml
 ```
 
 ## Documentation

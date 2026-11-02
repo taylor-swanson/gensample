@@ -1,6 +1,6 @@
 module github.com/taylor-swanson/gensample
 
-go 1.26
+go 1.27
 
 require (
 	github.com/elastic/go-ucfg v0.9.1

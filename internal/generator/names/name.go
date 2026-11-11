@@ -6,6 +6,7 @@ package names
 
 import (
 	"fmt"
+
 	"github.com/elastic/go-ucfg"
 
 	"github.com/taylor-swanson/gensample/internal/context"
